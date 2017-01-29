@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Подстанции</string>
+    <string name="select_sp_text">Выберите СП</string>
+    <string name="select_res_text">Выберите РЭС</string>
+    <string name="select_station_text">Выберите подстанцию</string>
+</resources>

@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Stationapp</string>
+    <string name="select_sp_text">Select SP</string>
+    <string name="select_res_text">Select RES</string>
+    <string name="select_station_text">Select station</string>
+</resources>
