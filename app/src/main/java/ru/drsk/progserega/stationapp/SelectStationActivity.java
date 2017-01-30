@@ -30,8 +30,6 @@ public class SelectStationActivity extends AppCompatActivity {
     }
     protected void init_db()
     {
-
-
         // TODO if empty db:
         if (true)
         {
@@ -40,8 +38,6 @@ public class SelectStationActivity extends AppCompatActivity {
                 Log.e("init_db()", "error test_fill_db()");
             }
         }
-
-
     }
     protected boolean test_fill_db()
     {
