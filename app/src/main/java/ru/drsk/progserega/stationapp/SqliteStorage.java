@@ -67,7 +67,7 @@ public class SqliteStorage {
         catch(SQLException e)
         {
             e.printStackTrace();
-            return null;
+            return -1;
         }
         return id;
     }
