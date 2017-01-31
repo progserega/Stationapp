@@ -230,4 +230,7 @@ public class SqliteStorage {
         return true;
     }
 
+    public List<String> getAllStationsOfRes(String sp_name, String res_name) {
+        // TODO
+    }
 }
