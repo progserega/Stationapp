@@ -19,44 +19,56 @@
         android:weightSum="1">
 
         <TextView
+            android:textSize="32sp"
             android:text="@string/select_sp_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/select_sp_text"
-            android:textAlignment="center" />
+            android:gravity="center"
+            />
 
         <Spinner
+            android:textSize="32sp"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:id="@+id/sp_selector"
             android:spinnerMode="dialog"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:dropDownWidth="match_parent" />
 
         <TextView
+            android:textSize="32sp"
             android:text="@string/select_res_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/select_res_text"
-            android:textAlignment="center" />
+            android:gravity="center"
+            />
 
         <Spinner
+            android:textSize="32sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/res_selector"
-            android:spinnerMode="dialog" />
+            android:spinnerMode="dialog"
+            android:dropDownWidth="match_parent" />
 
         <TextView
+            android:textSize="32sp"
             android:text="@string/select_station_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/select_station_text"
-            android:textAlignment="center" />
+            android:gravity="center"
+            />
 
         <Spinner
+            android:textSize="32sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/station_selector"
-            android:spinnerMode="dialog" />
+            android:spinnerMode="dialog"
+            android:dropDownWidth="match_parent" />
 
     </LinearLayout>
 </RelativeLayout>
