@@ -25,7 +25,7 @@ public class SqliteStorage {
         context = applicationcontext;
         dbHelper = new StationDbHelper(context);
     }
-    public List<String> getSp()
+    public List<String> getAllSp()
     {
         Cursor cur;
         List<Long> ids = new ArrayList<Long>();
@@ -51,16 +51,17 @@ public class SqliteStorage {
 
         return sp;
     }
-    /*
-    public List<String> getRes(Long sp_id)
+    public List<String> getSpIdbyName(String name)
     {
         Cursor cur;
         List<Long> ids = new ArrayList<Long>();
-        List<String> res = new ArrayList<String>();
+        List<String> sp = new ArrayList<String>();
+        String selection = "name = ?";
+        String[] selectionArgs = {name};
 
         try
         {
-            cur = db.query("res_tbl", new String[]{"id", "name"},null,null,null,null,null);
+            cur = db.query("sp_tbl", new String[]{"id"},selection,selectionArgs,null,null,null);
             while(cur.moveToNext()) {
                 long id=cur.getLong(cur.getColumnIndexOrThrow("id"));
                 String name=cur.getString(cur.getColumnIndexOrThrow("name"));
@@ -78,7 +79,67 @@ public class SqliteStorage {
 
         return sp;
     }
-*/
+
+    public List<String> getRes(String sp_name)
+    {
+        Cursor cur;
+        List<Long> ids = new ArrayList<Long>();
+        List<String> res = new ArrayList<String>();
+
+        String selection = "sp_id = ?";
+        String[] selectionArgs = {String.valueOf(sp_id)};
+
+        try
+        {
+            cur = db.query("res_tbl", new String[]{"id", "name"},selection,selectionArgs,null,null,null);
+            while(cur.moveToNext()) {
+                long id=cur.getLong(cur.getColumnIndexOrThrow("id"));
+                String name=cur.getString(cur.getColumnIndexOrThrow("name"));
+                Log.i("getRes()", "get SP from db: " + name);
+                ids.add(id);
+                res.add(name);
+            }
+            cur.close();
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+
+        return res;
+    }
+
+    public List<String> getRes(Long sp_id)
+    {
+        Cursor cur;
+        List<Long> ids = new ArrayList<Long>();
+        List<String> res = new ArrayList<String>();
+
+        String selection = "sp_id = ?";
+        String[] selectionArgs = {String.valueOf(sp_id)};
+
+        try
+        {
+            cur = db.query("res_tbl", new String[]{"id", "name"},selection,selectionArgs,null,null,null);
+            while(cur.moveToNext()) {
+                long id=cur.getLong(cur.getColumnIndexOrThrow("id"));
+                String name=cur.getString(cur.getColumnIndexOrThrow("name"));
+                Log.i("getRes()", "get SP from db: " + name);
+                ids.add(id);
+                res.add(name);
+            }
+            cur.close();
+        }
+        catch(SQLException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+
+        return res;
+    }
+
     public boolean init_db()
     {
         // Gets the data repository in write mode
