@@ -51,24 +51,17 @@ public class SqliteStorage {
 
         return sp;
     }
-    public List<String> getSpIdbyName(String name)
+    public long getSpIdbyName(String name)
     {
         Cursor cur;
-        List<Long> ids = new ArrayList<Long>();
-        List<String> sp = new ArrayList<String>();
+        long id;
         String selection = "name = ?";
         String[] selectionArgs = {name};
 
         try
         {
             cur = db.query("sp_tbl", new String[]{"id"},selection,selectionArgs,null,null,null);
-            while(cur.moveToNext()) {
-                long id=cur.getLong(cur.getColumnIndexOrThrow("id"));
-                String name=cur.getString(cur.getColumnIndexOrThrow("name"));
-                Log.i("getSP()", "get SP from db: " + name);
-                ids.add(id);
-                sp.add(name);
-            }
+            id=cur.getLong(cur.getColumnIndexOrThrow("id"));
             cur.close();
         }
         catch(SQLException e)
@@ -76,15 +69,16 @@ public class SqliteStorage {
             e.printStackTrace();
             return null;
         }
-
-        return sp;
+        return id;
     }
 
-    public List<String> getRes(String sp_name)
+    public List<String> getAllResOfSp(String sp_name)
     {
         Cursor cur;
         List<Long> ids = new ArrayList<Long>();
         List<String> res = new ArrayList<String>();
+
+        long sp_id=getSpIdbyName(sp_name);
 
         String selection = "sp_id = ?";
         String[] selectionArgs = {String.valueOf(sp_id)};
@@ -106,7 +100,6 @@ public class SqliteStorage {
             e.printStackTrace();
             return null;
         }
-
         return res;
     }
 

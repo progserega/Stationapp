@@ -23,14 +23,45 @@ public class SelectStationActivity extends AppCompatActivity {
             Log.e("init_db()", "error");
         }
 
-        List<String> sp=sqliteStorage.getSp();
+        List<String> sp=sqliteStorage.getAllSp();
+        if (sp==null)
+        {
+            Log.e("onCreate()", "error sqliteStorage.getAllSp()");
+        }
 
-        Spinner s = (Spinner) findViewById(R.id.sp_selector);
+        Spinner sp_spinner = (Spinner) findViewById(R.id.sp_selector);
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
   //              android.R.layout.simple_spinner_item, sp);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> sp_adapter = new ArrayAdapter<String>(this,
                 R.layout.one_row, R.id.text, sp);
-        s.setAdapter(adapter);
+        sp_spinner.setAdapter(sp_adapter);
+
+        // Выбранная СП:
+        String sp_name=sp_spinner.getSelectedView().toString();
+        // Заполняем список РЭС-ов:
+        List<String> res=sqliteStorage.getAllResOfSp(sp_name);
+        if (sp==null)
+        {
+            Log.e("onCreate()", "error sqliteStorage.getAllResOfSp()");
+        }
+        Spinner res_spinner = (Spinner) findViewById(R.id.res_selector);
+        ArrayAdapter<String> res_adapter = new ArrayAdapter<String>(this,
+                R.layout.one_row, R.id.text, res);
+        res_spinner.setAdapter(res_adapter);
+
+        // Выбранная РЭС:
+        String res_name=res_spinner.getSelectedView().toString();
+        // Заполняем список РЭС-ов:
+        List<String> stations=sqliteStorage.getAllStationsOfRes(sp_name,res_name);
+        if (stations==null)
+        {
+            Log.e("onCreate()", "error sqliteStorage.getAllStationsOfRes()");
+        }
+        Spinner stations_spinner = (Spinner) findViewById(R.id.station_selector);
+        ArrayAdapter<String> stations_adapter = new ArrayAdapter<String>(this,
+                R.layout.one_row, R.id.text, stations);
+        stations_spinner.setAdapter(stations_adapter);
+
     }
 
     @Override
