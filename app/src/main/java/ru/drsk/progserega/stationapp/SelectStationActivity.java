@@ -23,14 +23,25 @@ public class SelectStationActivity extends AppCompatActivity {
             Log.e("init_db()", "error");
         }
 
-        List<String> sp=sqliteStorage.getSp();
-
-        Spinner s = (Spinner) findViewById(R.id.sp_selector);
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-  //              android.R.layout.simple_spinner_item, sp);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        // заполнение списка СП:
+        List<String> sp=sqliteStorage.getAllSp();
+        Spinner sp_spinner = (Spinner) findViewById(R.id.sp_selector);
+        ArrayAdapter<String> sp_adapter = new ArrayAdapter<String>(this,
                 R.layout.one_row, R.id.text, sp);
-        s.setAdapter(adapter);
+        sp_spinner.setAdapter(sp_adapter);
+
+        // заполнение списка РЭС:
+        String current_sp_text = sp_spinner.getSelectedItem().toString();
+        Log.i("SelectStationActivity()", "current selected SP:" + current_sp_text);
+        List<String> res=sqliteStorage.getAllResBySpName(current_sp_text);
+        Log.i("SelectStationActivity()", "size of list res: " + res.size());
+
+        Spinner res_spinner = (Spinner) findViewById(R.id.res_selector);
+        ArrayAdapter<String> res_adapter = new ArrayAdapter<String>(this,
+                R.layout.one_row, R.id.text, res);
+        res_spinner.setAdapter(res_adapter);
+
+
     }
 
     @Override
