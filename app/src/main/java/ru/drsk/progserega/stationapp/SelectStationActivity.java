@@ -7,8 +7,12 @@ import java.util.List;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.view.View;
+import android.app.Activity;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 public class SelectStationActivity extends AppCompatActivity {
 
@@ -20,27 +24,30 @@ public class SelectStationActivity extends AppCompatActivity {
         SqliteStorage sqliteStorage = new SqliteStorage(getApplicationContext());
         if (!sqliteStorage.init_db())
         {
-            Log.e("init_db()", "error");
+            Log.e("SelectStationActivity()", "init_db() error");
         }
 
         // заполнение списка СП:
         List<String> sp=sqliteStorage.getAllSp();
+        if(sp==null)
+        {
+            Log.e("SelectStationActivity()", "sqliteStorage.getAllSp() error");
+            return;
+        }
         Spinner sp_spinner = (Spinner) findViewById(R.id.sp_selector);
+        // выставляем оформление и содержимое:
         ArrayAdapter<String> sp_adapter = new ArrayAdapter<String>(this,
                 R.layout.one_row, R.id.text, sp);
         sp_spinner.setAdapter(sp_adapter);
 
-        // заполнение списка РЭС:
-        String current_sp_text = sp_spinner.getSelectedItem().toString();
-        Log.i("SelectStationActivity()", "current selected SP:" + current_sp_text);
-        List<String> res=sqliteStorage.getAllResBySpName(current_sp_text);
-        Log.i("SelectStationActivity()", "size of list res: " + res.size());
-
         Spinner res_spinner = (Spinner) findViewById(R.id.res_selector);
-        ArrayAdapter<String> res_adapter = new ArrayAdapter<String>(this,
-                R.layout.one_row, R.id.text, res);
-        res_spinner.setAdapter(res_adapter);
+        Spinner station_spinner = (Spinner) findViewById(R.id.station_selector);
+        // прописываем обработчик:
+        SpinnerActivity spinnerActivity = new SpinnerActivity(this, sqliteStorage);
 
+        sp_spinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) spinnerActivity);
+        res_spinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) spinnerActivity);
+        station_spinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) spinnerActivity);
 
     }
 
