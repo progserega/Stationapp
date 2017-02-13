@@ -78,7 +78,7 @@ public class SqliteStorage {
             {
                 while(cur.moveToNext()) {
                     sp_id=cur.getInt(cur.getColumnIndexOrThrow("id"));
-                    Log.i("getSP()", "get SP id from db: " + sp_id);
+                    Log.d("getSpIdbyName()", "get SP id from db: " + sp_id);
                 }
             }
             cur.close();
@@ -109,7 +109,7 @@ public class SqliteStorage {
             {
                 while(cur.moveToNext()) {
                     res_id=cur.getInt(cur.getColumnIndexOrThrow("id"));
-                    Log.i("getResIdbyName()", "get Res id from db: " + res_id);
+                    Log.d("getResIdbyName()", "get Res id from db: " + res_id);
                 }
             }
             cur.close();
@@ -141,20 +141,21 @@ public class SqliteStorage {
 
     public List<String> getAllStationsByResId(int res_id)
     {
-        // TODO
         Cursor cur;
         List<Long> ids = new ArrayList<Long>();
-        List<String> res = new ArrayList<String>();
+        List<String> stations = new ArrayList<String>();
+        List<Integer> np_ids = new ArrayList<Integer>();
+        int sp_id,np_id;
 
-        String selection = "sp_id = ?";
-        String[] selectionArgs = {String.valueOf(sp_id)};
+        String selection = "res_id = ?";
+        String[] selectionArgs = {String.valueOf(res_id)};
 
         try
         {
  //           cur = db.query("res_tbl", new String[]{"id", "name", "sp_id"},null,null,null,null,null);
-            cur = db.query("res_tbl", new String[]{"id", "name", "sp_id"},selection,selectionArgs,null,null,null);
+            cur = db.query("station_tbl", new String[]{"id", "name", "sp_id", "np_id"},selection,selectionArgs,null,null,null);
             if (cur.getCount()==0) {
-                Log.e("getResBySpId()", "select return 0 records!");
+                Log.e("getAllStationsByResId()", "select return 0 records!");
                 cur.close();
                 return null;
             }
@@ -163,10 +164,12 @@ public class SqliteStorage {
                 while(cur.moveToNext()) {
                     long id=cur.getLong(cur.getColumnIndexOrThrow("id"));
                     sp_id= cur.getInt(cur.getColumnIndexOrThrow("sp_id"));
+                    np_id= cur.getInt(cur.getColumnIndexOrThrow("np_id"));
                     String name=cur.getString(cur.getColumnIndexOrThrow("name"));
-                    Log.i("getResBySpId()", "id=" + id + " name=" + name + " sp_id=" + sp_id);
+                    Log.d("getAllStationsByResId()", "id=" + id + " name=" + name + " res_id=" + res_id);
                     ids.add(id);
-                    res.add(name);
+                    stations.add(name);
+                    np_ids.add(np_id);
                 }
             }
             cur.close();
@@ -176,7 +179,7 @@ public class SqliteStorage {
             e.printStackTrace();
             return null;
         }
-        return res;
+        return stations;
     }
 
     public List<String> getAllResBySpName(String sp_name)
