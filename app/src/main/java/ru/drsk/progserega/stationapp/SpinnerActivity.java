@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
 
@@ -29,6 +30,7 @@ public class SpinnerActivity extends Activity implements AdapterView.OnItemSelec
         Spinner sp_spinner = (Spinner) StationActivity.findViewById(R.id.sp_selector);
         Spinner res_spinner = (Spinner) StationActivity.findViewById(R.id.res_selector);
         Spinner station_spinner = (Spinner) StationActivity.findViewById(R.id.station_selector);
+        Button station_add_bug = (Button) StationActivity.findViewById(R.id.station_add_bug);
         Log.d("onItemSelected()", "text: " + parent.getItemAtPosition(pos).toString());
         if (parent.equals(sp_spinner))
         {
@@ -63,6 +65,8 @@ public class SpinnerActivity extends Activity implements AdapterView.OnItemSelec
             if (stations == null) {
                 Log.e("onItemSelected()", "sqliteStorage.getAllStationByResName() error");
                 stations = new ArrayList<String>();
+                // кнопку добавления ошибки делаем ненажимаемой:
+                station_add_bug.setEnabled(false);
             }
             Log.d("onItemSelected()", "size of list res: " + stations.size());
 
@@ -71,7 +75,10 @@ public class SpinnerActivity extends Activity implements AdapterView.OnItemSelec
             station_spinner.setAdapter(res_adapter);
 
         } else if (parent.equals(station_spinner)) {
-            Log.i("onItemSelected()", "station_sp_spinner: " + parent.getItemAtPosition(pos).toString());
+            Log.d("onItemSelected()", "station_sp_spinner: " + parent.getItemAtPosition(pos).toString());
+
+            // кнопку добавления ошибки делаем ненажимаемой:
+            station_add_bug.setEnabled(true);
         }
 
     }

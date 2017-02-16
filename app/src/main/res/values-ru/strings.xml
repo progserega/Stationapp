@@ -3,4 +3,5 @@
     <string name="select_sp_text">Выберите СП</string>
     <string name="select_res_text">Выберите РЭС</string>
     <string name="select_station_text">Выберите подстанцию</string>
+    <string name="station_add_bug">Сообщить о сбое</string>
 </resources>
